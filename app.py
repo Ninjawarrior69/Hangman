@@ -1,5 +1,5 @@
 import uuid
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, flash, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, IntegerField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
@@ -36,18 +36,21 @@ class HangmanReviewForm(FlaskForm):
 def CreateFeedback():
     form = HangmanReviewForm()
     if form.validate_on_submit():
-        # Extract form data
+        # Extract the data from the form
         DATA_username = form.username.data
         DATA_datePlayed = form.datePlayed.data
         DATA_Game_Rating = form.Game_Rating.data
         DATA_General_Comments = form.General_Comments.data
+        
+        try:
+            REVIEW_NEW = HangmanReviews(username=DATA_username, datePlayed=DATA_datePlayed, Game_Rating=DATA_Game_Rating, General_Comments=DATA_General_Comments)
+            db.session.add(REVIEW_NEW)
+            db.session.commit()
+            return redirect(url_for('Hangman_Reviews'))
 
-        # Create HangmanReviews object
-        REVIEW_NEW = HangmanReviews(username=DATA_username, datePlayed=DATA_datePlayed, Game_Rating=DATA_Game_Rating, General_Comments=DATA_General_Comments)
-        db.session.add(REVIEW_NEW)
-        db.session.commit()
-
-        return redirect(url_for('Hangman_Reviews'))
+        except Exception as e:
+               db.session.rollback()  # Roll back to avoid leaving  transactions open
+               flash('Error cannot submit more than one review per session', 'error')
     return render_template('CreateFeedback.html', form=form)
 
 @app.route('/ExistingFeedback')
