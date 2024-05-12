@@ -10,6 +10,7 @@ from flask_migrate import Migrate
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  
 
+#Models.py
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Hangman_reviews.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -22,7 +23,7 @@ class HangmanReviews(db.Model):
     General_Comments = db.Column(db.Text)
     
 
-
+# Form.py
 class HangmanReviewForm(FlaskForm):
     username = StringField("Username:", validators=[DataRequired()])
     datePlayed = DateField("Last Played", validators=[DataRequired()])
@@ -30,6 +31,7 @@ class HangmanReviewForm(FlaskForm):
     General_Comments = TextAreaField('General Comments')
     submit = SubmitField('Submit your Response')
 
+#Routes.py
 @app.route('/CreateFeedback', methods=['GET', 'POST'])
 def CreateFeedback():
     form = HangmanReviewForm()
