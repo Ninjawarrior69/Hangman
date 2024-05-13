@@ -83,8 +83,7 @@ if __name__ == '__main__':
 
 
 
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'  
+  
 socketio = SocketIO(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 # initialize the app with the extension
