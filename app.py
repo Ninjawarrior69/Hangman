@@ -28,6 +28,14 @@ class HangmanReviews(db.Model):
     datePlayed = db.Column(db.Date, nullable=False)
     Game_Rating = db.Column(db.Integer, nullable=False)
     General_Comments = db.Column(db.Text)
+
+
+class TestHangmanReviews(db.Model):
+    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    datePlayed = db.Column(db.Date, nullable=False)
+    Game_Rating = db.Column(db.Integer, nullable=False)
+    General_Comments = db.Column(db.Text)
     
 
 # Form.py
@@ -37,6 +45,11 @@ class HangmanReviewForm(FlaskForm):
     Game_Rating = IntegerField("Game Rating (out of 10):", validators=[NumberRange(min=1, max=10)])
     General_Comments = TextAreaField('General Comments')
     submit = SubmitField('Submit your Response')
+
+def create_tables():
+    with app.app_context():
+        db.create_all()
+create_tables()
 
 #Routes.py
 @app.route('/CreateFeedback', methods=['GET', 'POST'])
@@ -85,10 +98,7 @@ if __name__ == '__main__':
 
   
 socketio = SocketIO(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-# initialize the app with the extension
-db = SQLAlchemy()
-db.init_app(app)
+
 
 class User(db.Model):
     __tablename__ = 'users'
