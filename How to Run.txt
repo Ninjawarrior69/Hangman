@@ -1,0 +1,29 @@
+Welcome to our Hangman Game! We provide users with 4 different game modes that includes:
+• Easy mode
+Play the game on easy difficulty
+• Hard mode
+Play the game on hard difficulty
+• Two-player mode
+Sending challenge to other players, players who received the challenge will be notify, 
+once the challenge is completed, the sender will also be notify.
+• Competetive mode
+Competing against other players, players are able to assess their score via the leaderboard.
+
+1. Open New Terminal
+
+2. Enter this command to update python version
+python.exe -m pip install --upgrade pip
+
+3. Enter this command to install flask:
+pip install flask
+
+4. Enter this command to install Socket.IO:
+pip install flask-socketio
+
+5. Enter this command to install sqlalchemy:
+pip install flask-sqlalchemy
+
+6. Run App.py or enter this command:
+python App.py
+
+7. Click on the host link, eg. http://127.0.0.1:5005
