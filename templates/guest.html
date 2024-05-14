@@ -1,0 +1,83 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+<div class="score">
+  <div class="small-container">
+    <div class="row">
+
+
+      <div class="col-4" id='guessesRemainingDisplay'>Incorrect guesses remaining: <span
+          id='numberOfGuessesRemaining'>6</span>
+      </div>
+
+      <div class="col-4">
+        <p id='games-won'>Games Won: <span id='number-of-games-won'>0</span></p>
+      </div>
+
+      <div class="col-4">
+        <p>Games Lost: <span id='number-of-games-lost'>0</span></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="play-button">
+  <div class="small-container">
+    <div class="row">
+
+      <div id='button-container' class='col-6'>
+        <div id='resetButtonContainer'>
+          <button id='startButton' class='button'>Start New Game</button>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <button id='reset-score-board' class='button'>Reset Score Board</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="result">
+  <div class="small-container">
+    <div class="row">
+
+      <div id='gameBoard' class='game-board-wrapper col-12'>
+        <img id='hangman-display' class='hangman-display' src='../static/images/Hangman-begin.gif' alt='hangman-game-display'>
+        <div id='letterBoard' class="letterBoard"></div>
+        <div id='containerForLeaderboardMessage' class="leaderboardUpdateMessage"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="type-letters">
+  <div class="small-container">
+    <div class="row">
+
+      <div id='containerForHiddenLetterList' class='col-12'>
+        <div id='hiddenLetterList'></div>
+        <div id='containerForHintButton'></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hint">
+  <div class="small-container">
+    <div class="row">
+
+      <div id="containerForHint" class='col-12'>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
