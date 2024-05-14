@@ -2,16 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 import sqlite3
 from flask_socketio import SocketIO, send, emit
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_socketio import SocketIO, send, emit
 from sqlalchemy import or_
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  
-socketio = SocketIO(app)
+app.secret_key = 'your_secret_key'
+
+# Configure the Flask app
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-# initialize the app with the extension
-db = SQLAlchemy()
-db.init_app(app)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Disable modification tracking
+
+# Initialize SQLAlchemy and Flask-Migrate
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# Initialize Socket.IO
+socketio = SocketIO(app)
 
 class User(db.Model):
     __tablename__ = 'users'
