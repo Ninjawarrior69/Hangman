@@ -1,4 +1,3 @@
-
 import uuid
 
 from flask_wtf import FlaskForm
@@ -69,7 +68,7 @@ def CreateFeedback():
             return redirect(url_for('Hangman_Reviews'))
 
         except Exception as e:
-               db.session.rollback()  # Roll back to avoid leaving  transactions open
+               db.session.rollback()  # Roll back to avoid issues
                flash('Error cannot submit more than one review per session', 'error')
     return render_template('CreateFeedback.html', form=form)
 
@@ -81,7 +80,26 @@ def Hangman_Reviews():
 
 @app.route('/charts')
 def charts():
-     return "Work in Progress"
+    # Query data for line chart (average game score over time)
+      line_chart_data = db.session.query(HangmanReviews.datePlayed, db.func.avg(HangmanReviews.Game_Rating)).group_by(HangmanReviews.datePlayed).all()
+
+    # Query data for bar chart (distribution of scores)
+      bar_chart_data = db.session.query(HangmanReviews.Game_Rating, db.func.count(HangmanReviews.reviewID)).group_by(HangmanReviews.Game_Rating).all()
+      date_labels=[]
+      avg_ratings=[]
+
+      ratings_COUNT=[]
+      categories_DATA=[]
+
+
+      for date,average_Ratings in line_chart_data:
+         avg_ratings.append(average_Ratings)
+         date_labels.append(str(date))
+
+      for categories,count in bar_chart_data:
+          categories_DATA.append(categories)
+          ratings_COUNT.append(count)
+      return render_template('FeedbackGraphics.html',ALL_DATES=date_labels,ALL_AVG=avg_ratings,COUNTS=ratings_COUNT,CATEGORIES=categories_DATA)
 
 
 def init_db():
@@ -90,9 +108,7 @@ def init_db():
 
 init_db()
 
-if __name__ == '__main__':
-    #socketio.run(app, debug=True, port=5005)
-    app.run(debug=True, port=5005)
+
 
 
 

@@ -15,14 +15,14 @@ class TestReviews(unittest.TestCase):
         db.session.remove()
         self.app_context.pop()
 
-    def test_average_GameRatings(self):
+    def test_average_GameRatings(self):   #Testing correct averages to ensure correct data gets plotted for the /charts route
         HangManReview1 = TestHangmanReviews(reviewID='ID_1', username='TestUser1', datePlayed=datetime.now(),Game_Rating=5,General_Comments="")
         HangManReview2 = TestHangmanReviews(reviewID='ID_2', username='TestUser2', datePlayed=datetime.now(),Game_Rating=6,General_Comments="")
         HangManReview3 = TestHangmanReviews(reviewID='ID_3', username='TestUser3', datePlayed=datetime.now(),Game_Rating=8,General_Comments="")
         db.session.add_all([HangManReview1, HangManReview2, HangManReview3])
         db.session.commit()
 
-        # Calculate the manually calculated average
+        # Calculate the manually calculated average SELECT AVERAGE(game_rating) FROM TestHangmanReviews
         hand_calculated_mean = (5 + 6 + 8) / 3
         average_value = db.session.query(func.avg(TestHangmanReviews.Game_Rating)).scalar()
 
