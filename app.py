@@ -1,17 +1,123 @@
+import uuid
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, DateField, IntegerField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired, NumberRange
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 import sqlite3
 from flask_socketio import SocketIO, send, emit
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_socketio import SocketIO, send, emit
 from sqlalchemy import or_
 from datetime import datetime
 
+#init.py
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  
+
+#Models.py
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Hangman_reviews.db'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+class HangmanReviews(db.Model):
+    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    datePlayed = db.Column(db.Date, nullable=False)
+    Game_Rating = db.Column(db.Integer, nullable=False)
+    General_Comments = db.Column(db.Text)
+
+
+class TestHangmanReviews(db.Model):
+    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    datePlayed = db.Column(db.Date, nullable=False)
+    Game_Rating = db.Column(db.Integer, nullable=False)
+    General_Comments = db.Column(db.Text)
+    
+
+# Form.py
+class HangmanReviewForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    datePlayed = DateField("Last Played", validators=[DataRequired()])
+    Game_Rating = IntegerField("Game Rating (out of 10):", validators=[NumberRange(min=1, max=10)])
+    General_Comments = TextAreaField('General Comments')
+    submit = SubmitField('Submit your Response')
+
+def create_tables():
+    with app.app_context():
+        db.create_all()
+create_tables()
+
+#Routes.py
+@app.route('/CreateFeedback', methods=['GET', 'POST'])
+def CreateFeedback():
+    form = HangmanReviewForm()
+    if form.validate_on_submit():
+        # Extract the data from the form
+        DATA_username = form.username.data
+        DATA_datePlayed = form.datePlayed.data
+        DATA_Game_Rating = form.Game_Rating.data
+        DATA_General_Comments = form.General_Comments.data
+        
+        try:
+            REVIEW_NEW = HangmanReviews(username=DATA_username, datePlayed=DATA_datePlayed, Game_Rating=DATA_Game_Rating, General_Comments=DATA_General_Comments)
+            db.session.add(REVIEW_NEW)
+            db.session.commit()
+            return redirect(url_for('Hangman_Reviews'))
+
+        except Exception as e:
+               db.session.rollback()  # Roll back to avoid issues
+               flash('Error cannot submit more than one review per session', 'error')
+    return render_template('CreateFeedback.html', form=form)
+
+@app.route('/ExistingFeedback')
+def Hangman_Reviews():
+    Hangman_Reviews_Data = HangmanReviews.query.all()
+    return render_template('ListFeedback.html', Hangman_Reviews_Data=Hangman_Reviews_Data)
+
+
+@app.route('/charts')
+def charts():
+    # Query data for line chart (average game score over time)
+      line_chart_data = db.session.query(HangmanReviews.datePlayed, db.func.avg(HangmanReviews.Game_Rating)).group_by(HangmanReviews.datePlayed).all()
+
+    # Query data for bar chart (distribution of scores)
+      bar_chart_data = db.session.query(HangmanReviews.Game_Rating, db.func.count(HangmanReviews.reviewID)).group_by(HangmanReviews.Game_Rating).all()
+      date_labels=[]
+      avg_ratings=[]
+
+      ratings_COUNT=[]
+      categories_DATA=[]
+
+
+      for date,average_Ratings in line_chart_data:
+         avg_ratings.append(average_Ratings)
+         date_labels.append(str(date))
+
+      for categories,count in bar_chart_data:
+          categories_DATA.append(categories)
+          ratings_COUNT.append(count)
+      return render_template('FeedbackGraphics.html',ALL_DATES=date_labels,ALL_AVG=avg_ratings,COUNTS=ratings_COUNT,CATEGORIES=categories_DATA)
+
+
+def init_db():
+    with app.app_context():
+        db.create_all()
+
+init_db()
+
+
+
+
+
+  
 socketio = SocketIO(app)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-# initialize the app with the extension
-db = SQLAlchemy()
-db.init_app(app)
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -282,3 +388,4 @@ def decrement_score():
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=5005)
     # app.run(debug=True, port=5005)
+

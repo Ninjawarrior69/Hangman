@@ -9,21 +9,35 @@ once the challenge is completed, the sender will also be notify.
 • Competetive mode
 Competing against other players, players are able to assess their score via the leaderboard.
 
+We also included a feedback forum in which existing players can provide their feedback to the game developers:
+
+How to play :
+
 1. Open New Terminal
 
 2. Enter this command to update python version
 python.exe -m pip install --upgrade pip
 
-3. Enter this command to install flask:
+3. Enter these commands to install flask:
 pip install flask
 
-4. Enter this command to install Socket.IO:
+4. Enter these commands to install flask WTF:
+pip install Flask-WTF
+
+
+5. Enter this command to install Socket.IO:
 pip install flask-socketio
 
-5. Enter this command to install sqlalchemy:
+6. Enter these commands to install  WTF forms :
+ pip install WTForms
+
+7. Enter this command to install sqlalchemy:
 pip install flask-sqlalchemy
 
-6. Run App.py or enter this command:
+8. Enter this command to install flask_Migrate:
+    pip install Flask-Migrate
+
+9. Run App.py or enter this command:
 python App.py
 
-7. Click on the host link, eg. http://127.0.0.1:5005
+10. Click on the host link, eg. http://127.0.0.1:5005
