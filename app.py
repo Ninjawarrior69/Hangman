@@ -9,6 +9,9 @@ from flask_migrate import Migrate
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 import sqlite3
 from flask_socketio import SocketIO, send, emit
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_socketio import SocketIO, send, emit
 from sqlalchemy import or_
 from datetime import datetime
 
