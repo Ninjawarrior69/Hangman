@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Feedback.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Existing Feedback</title>
+</head>
+<body>
+    <div class="container">
+        <div id="CreateFeedBackTitle">
+            <a class="navbar-brand" href='/'><img class="logo"
+                src="{{url_for('static',filename='images/hangman title.png')}}" alt="logo"></a>
+            <h1>Existing Feedback</h1>
+        </div>
+        <br>
+        <h2 class="SubHead">Existing Feedback</h2>
+        <br>
+        <table class="Feedbacktable">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Last Played</th>
+                <th scope="col">Game Rating</th>
+                <th scope="col">General Comments</th>
+            </tr>
+            {% for Hangman_Review in Hangman_Reviews_Data %}
+            <tr>
+                <td>{{ Hangman_Review.username }}</td>
+                <td>{{ Hangman_Review.datePlayed }}</td>
+                <td>{{ Hangman_Review.Game_Rating }}</td>
+                <td>{{ Hangman_Review.General_Comments }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <button class="btn btn-primary" onclick="location.href='/charts'">View Feedback Graphics</button>
+    </div>
+</body>
+</html>
