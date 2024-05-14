@@ -72,24 +72,36 @@ We provide users with 4 different game modes:
 - Allows users to accept or decline game invitations.
 
 ## How to launch the game
-
 1. Open New Terminal
 
 2. Enter this command to update python version
-   python.exe -m pip install --upgrade pip
+python.exe -m pip install --upgrade pip
 
-3. Enter this command to install flask:
-   pip install flask
+3. Enter these commands to install flask:
+pip install flask
 
-4. Enter this command to install Socket.IO:
-   pip install flask-socketio
+4. Enter these commands to install flask WTF:
+pip install Flask-WTF
 
-5. Enter this command to install sqlalchemy:
-   pip install flask-sqlalchemy
 
-6. Run App.py or enter this command:
-   python3 app.py
+5. Enter this command to install Socket.IO:
+pip install flask-socketio
 
-7. Click on the host link, eg. http://127.0.0.1:5005
+6. Enter these commands to install  WTF forms :
+ pip install WTForms
 
-## How to run test
+7. Enter this command to install sqlalchemy:
+pip install flask-sqlalchemy
+
+8. Enter this command to install flask_Migrate:
+    pip install Flask-Migrate
+
+9. Run App.py or enter this command:
+run either flask run or run the app.py file in the top right corner
+
+10. Click on the host link, eg. http://127.0.0.1:5005
+
+
+## How to run  unit test
+run in command line 
+ python -m unittest unit.py 
