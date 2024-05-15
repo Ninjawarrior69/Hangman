@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<style>
+    
+    
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="leaderboard-content-wrapper">
+    <div class="leaderboard">
+        <div class="small-container">
+          <div class="row">
+            <div class="col-12">
+    
+<div class="leaderboard-container">
+    <h2 style="text-align: center;">Leaderboard</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr {% if user[0]==name %}class="highlight" {% endif %}>
+                <td>{{ loop.index }}</td>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
