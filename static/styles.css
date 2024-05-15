@@ -1,3 +1,173 @@
+.signup-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .icon {
+    position: absolute;
+    padding: 15px;
+    pointer-events: none;
+  }
+  .fa-user {
+    padding-top: 16px;
+    padding-left: 10px;
+  }
+  .fa-lock {
+    padding-top: 16px;
+    padding-left: 10px;
+  }
+  .fa-check-circle {
+    color: #4caf50;
+    padding-top: 16px;
+    padding-left: 10px;
+    visibility: hidden;
+  }
+  input[type="text"]:focus + .fa-user,
+  input[type="password"]:focus + .fa-lock {
+    color: #4caf50;
+  }
+  input[type="text"]:valid + .fa-user,
+  input[type="password"]:valid + .fa-lock {
+    color: #4caf50;
+  }
+  input[type="text"]:valid + .fa-check-circle,
+  input[type="password"]:valid + .fa-check-circle {
+    visibility: visible;
+  }
+  
+  .success-msg{
+    color: #07cc0d;
+  }
+  
+  .error-msg{
+    color: #de0707;
+  }
+  .msg-col{
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 14px;
+  }
+  /**----------sign up---------------**/
+  
+  @media only screen and (max-device-width : 480px) {
+    body {
+      margin: auto;
+    }
+  
+    .game-board-wrapper {
+      flex-direction: column;
+      margin-right: 0;
+    }
+  
+    #letterBoard {
+      width: 80%;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      justify-content: space-between;
+      order: 5;
+    }
+  
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+.login-container {
+    max-width: 400px;
+    margin: 150px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.icon {
+    position: absolute;
+    padding: 15px;
+    pointer-events: none;
+}
+.fa-user {
+    padding-top: 16px;
+    padding-left: 10px;
+}
+.fa-lock {
+    padding-top: 16px;
+    padding-left: 10px;
+}
+.msg{
+color: #de0707;
+margin-bottom: 8px;
+text-align: center;
+font-size: 14px;
+}
+
+
 body {
   background-color: #ffffff; /*coral*/
   margin: 0;
@@ -778,6 +948,3 @@ background-size: 15px;
 .Feedbacktable tr:hover {
   background-color: rgb(191, 191, 191);
 }
-
-
-
