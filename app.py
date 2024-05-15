@@ -20,7 +20,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  
 
 #Models.py
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Hangman_reviews.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
