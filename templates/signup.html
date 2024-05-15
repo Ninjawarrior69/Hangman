@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='loginStyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-XXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles.css')}}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+
     </style>
 </head>
-<body>
+
+<body class="signup-body">
     <div class="signup-container">
         <h2>Sign Up</h2>
         <form method="POST" action="/signup">
-            <!-- Add message div -->
+            <!-- Add a success message div -->
 
             <div class="msg-col">
-            {% if success_msg %}
-<div class="success-msg">{{ success_msg }}</div>
-{% endif %}
+                {% if success_msg %}
+                <div class="success-msg">{{ success_msg }}</div>
+                {% endif %}
 
-{% if error_msg %}
-<div class="error-msg">{{ error_msg }}</div>
-{% endif %}
-</div>
+                {% if error_msg %}
+                <div class="error-msg">{{ error_msg }}</div>
+                {% endif %}
+            </div>
 
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" required>
-            <i class="fas fa-user icon"></i><br>
+            <i class="fas fa-user icon"></i>
+            <i class="fas fa-check-circle"></i><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password" required>
-            <i class="fas fa-lock icon"></i><br>
+            <i class="fas fa-lock icon"></i>
+            <i class="fas fa-check-circle"></i><br>
             <label for="confirm_password">Confirm Password:</label><br>
             <input type="password" id="confirm_password" name="confirm_password" required>
-            <i class="fas fa-lock icon"></i><br><br>
+            <i class="fas fa-lock icon"></i>
+            <i class="fas fa-check-circle"></i><br><br>
             <input type="submit" value="Sign Up">
         </form>
         <hr>
-        <!-- Add a link to the login page -->
-        <p style="text-align: center;">Already Have An Account? <a href="login.html">Login</a></p>
+        <p style="text-align: center;">Already Have An Account?<a href="/login">Login</a></p>
     </div>
 </body>
+
 </html>
