@@ -24,7 +24,7 @@ class BarChartTest(unittest.TestCase):
         self.assertTrue(barChart.is_displayed())
 
 
-    def test_ExistingFeedback_loads(self):
+    def test_ExistingFeedback_loading(self):
         # same as before but for the existing feedback
         self.driver.get("http://127.0.0.1:5000/ExistingFeedback")
 
@@ -35,7 +35,7 @@ class BarChartTest(unittest.TestCase):
         self.assertTrue(ExistingFeedbackTable.is_displayed())
 
 
-    def test_numberOf_Forms(self):
+    def test_check_CSRF_token_and_form_loads(self):
         self.driver.get("http://127.0.0.1:5000/CreateFeedback")
 
         Forms = self.driver.find_elements(By.CLASS_NAME,"form-group")

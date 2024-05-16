@@ -25,6 +25,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 app.config['WTF_CSRF_ENABLED'] = True  # Enable CSRF protection
 csrf = CSRFProtect(app)
+                  ## Test and Feedback models created by Josh Cooper
 
 class HangmanReviews(db.Model):
     reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
@@ -54,7 +55,7 @@ def create_tables():
     with app.app_context():
         db.create_all()
 create_tables()
-
+  ## Feedback routes also made by Josh Cooper
 #Routes.py
 @app.route('/CreateFeedback', methods=['GET', 'POST'])
 def CreateFeedback():
