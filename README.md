@@ -72,6 +72,7 @@ We provide users with 4 different game modes:
 - Allows users to accept or decline game invitations.
 
 ## How to launch the game
+
 1. Open New Terminal
 
 2. Enter this command to update python version
@@ -96,12 +97,17 @@ pip install flask-sqlalchemy
 8. Enter this command to install flask_Migrate:
     pip install Flask-Migrate
 
-9. Run App.py or enter this command:
-run either flask run or run the app.py file in the top right corner
+9. Enter this command to install selenium:
+    pip install selenium
 
-10. Click on the host link, eg. http://127.0.0.1:5005
+10. Run App.py or enter this command:
+python App.py or flask run 
 
+11. Click on the host link, eg. http://127.0.0.1:5005
 
-## How to run  unit test
-run in command line 
- python -m unittest unit.py 
+To run the unit test :
+type python -m unittest unit.py 
+
+To run the selenium test :
+run the application 
+then open a new terminal and type python -m unittest seleniumTest.py 
