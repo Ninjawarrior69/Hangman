@@ -28,17 +28,17 @@
                 <div class="error-msg">{{ error_msg }}</div>
                 {% endif %}
             </div>
-
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required>
+            {{ form.csrf_token }}
+            {{ form.username.label }}
+            {{ form.username( id="username") }}
             <i class="fas fa-user icon"></i>
             <i class="fas fa-check-circle"></i><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required>
+            {{ form.password.label }}
+            {{ form.password( id="password") }}
             <i class="fas fa-lock icon"></i>
             <i class="fas fa-check-circle"></i><br>
-            <label for="confirm_password">Confirm Password:</label><br>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password( id="confirm_password") }}
             <i class="fas fa-lock icon"></i>
             <i class="fas fa-check-circle"></i><br><br>
             <input type="submit" value="Sign Up">

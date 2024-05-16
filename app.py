@@ -1,7 +1,7 @@
 import uuid
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, IntegerField, TextAreaField, SubmitField
+from flask_wtf import CSRFProtect, FlaskForm
+from wtforms import PasswordField, StringField, DateField, IntegerField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -23,6 +23,8 @@ app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+app.config['WTF_CSRF_ENABLED'] = True  # Enable CSRF protection
+csrf = CSRFProtect(app)
 
 class HangmanReviews(db.Model):
     reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
@@ -202,20 +204,28 @@ def newChallenge(word, hint, player):
 
 
 # Route for the signup page
+
+class SignupForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    password= PasswordField("Password",validators=[DataRequired()])
+    confirm_password= PasswordField("Confirm Password",validators=[DataRequired()])
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    form=SignupForm()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
         if password != confirm_password:
-            return render_template('signup.html', error_msg="Passwords do not match. Please try again.")
+            return render_template('signup.html', error_msg="Passwords do not match. Please try again.",form=form)
         
         existing_user = db.session.execute(db.select(User).where(User.username == username)).scalar()
         
         if existing_user:
-            return render_template('signup.html', error_msg="User already exists. Please choose a different username.")
+            return render_template('signup.html', error_msg="User already exists. Please choose a different username.",form=form)
         
         new_user = User(
             username = username,
@@ -225,16 +235,20 @@ def signup():
         db.session.commit()
 
         # Pass a success message to the template
-        return render_template('signup.html', success_msg="Account has been created successfully!")
+        return render_template('signup.html', success_msg="Account has been created successfully!",form=form)
 
-    return render_template('signup.html')
+    return render_template('signup.html',form=form)
 
-
+class LoginForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    password= PasswordField("Password",validators=[DataRequired()])
+    
 
 
 # Route for the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    forms=LoginForm()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -247,9 +261,9 @@ def login():
             return redirect(url_for('home'))
         else:
             # Pass the error message to the template
-            return render_template('login.html', msg="Invalid username or password. Please try again.")
+            return render_template('login.html', msg="Invalid username or password. Please try again.",form=forms)
 
-    return render_template('login.html')
+    return render_template('login.html',form=forms)
 
 
 # Route for the home page

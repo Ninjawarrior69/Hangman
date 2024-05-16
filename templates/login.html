@@ -21,13 +21,14 @@
         <h2>Login</h2>
         <form method="POST" action="/login">
             <div class="msg">{{ msg }}</div>
-
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required>
+            {{ form.csrf_token }}
+            {{ form.username.label }}
+            {{ form.username( id="username") }}
             <i class="fas fa-user icon"></i><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required>
+            {{ form.password.label }}
+            {{ form.password( id="username") }}
             <i class="fas fa-lock icon"></i><br><br>
+            
             <input type="submit" value="Login">
         </form>
         <hr>
