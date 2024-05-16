@@ -321,9 +321,14 @@ def a_challenge(id):
     db.session.commit()
     return ''
 
+class TwoPlayerChallengeForm(FlaskForm):
+    player=StringField("Player:",validators=[DataRequired()])
+    word = StringField("Enter Word:", validators=[DataRequired()])
+    hint= StringField("Hint:",validators=[DataRequired()])
 
 @app.route('/two-player-challenge', methods=["POST", "GET"])
 def twoPlayerChallenge():
+    form=TwoPlayerChallengeForm()
     error = None
     if request.method == 'POST':
         word = request.form.get('word')
@@ -339,7 +344,7 @@ def twoPlayerChallenge():
             return redirect(url_for('home'))
         
     users = db.session.execute(db.select(User)).scalars()
-    return render_template('new-challenge.html', name=session['username'], users=users, all_c=get_all_challenges(), n_not=get_all_unread_notifications(), error=error)
+    return render_template('new-challenge.html', name=session['username'], users=users, all_c=get_all_challenges(), n_not=get_all_unread_notifications(), error=error,form=form)
 
 
 @app.route('/get-challenge/<id>')
