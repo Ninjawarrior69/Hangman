@@ -12,7 +12,7 @@
     <div class="container">
         <div id="CreateFeedBackTitle">
             <a class="navbar-brand" href='/'><img class="logo"
-                src="{{url_for('static',filename='images/hangman title.png')}}" alt="logo"></a>
+                src="{{url_for('static',filename='images/hangman-title.png')}}" alt="logo"></a>
             <h1>Share Your Hangman Game Experience!!</h1>
         </div>
         <br>
@@ -32,8 +32,8 @@
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.csrf_token }}
-                {{ form.username.label }}
-                {{ form.username( id="Feedbackusername") }}
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ name }}" readonly>
             </div>
             <div class="form-group">
                 {{ form.datePlayed.label }}
@@ -59,8 +59,11 @@
             <div class="form-group">
                 {{ form.submit(class="btn btn-danger") }}
             </div>
+            <button class="btn btn-primary" onclick="location.href='/ExistingFeedback'" >View existing Reviews</button>
+       <br>    
         </form>
-        <button class="btn btn-primary" onclick="location.href='/ExistingFeedback'">View existing Reviews</button>
+        <br>
+        <button class="btn btn-primary" onclick="location.href='/'">Back Home</button>
     </div>
 </body>
 </html>
