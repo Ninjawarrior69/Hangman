@@ -24,12 +24,13 @@
         <div class="challenge-msg">{{ error }}</div>
     {% endif %}
 
-        <label for="word">Enter Word:</label><br>
-        <input type="text" id="word" name="word" required>
-        <label for="hint">Enter Hint:</label><br>
-        <input type="text" id="hint" name="hint" required>
-        <label for="player">Choose a player:</label><br>
-        <input type="text" id="player" name="player" required><br>
+    {{ form.csrf_token }}
+    {{ form.word.label }}
+    {{ form.word( id="word") }}
+    {{ form.hint.label }}
+    {{ form.hint( id="hint") }}
+    {{ form.player.label }}
+    {{ form.player( id="player") }}
         <input type="submit" value="Send Challenge" id="submitChallenge">
     </form>
 

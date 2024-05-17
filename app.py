@@ -1,16 +1,13 @@
 import uuid
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, IntegerField, TextAreaField, SubmitField
+from flask_wtf import CSRFProtect, FlaskForm
+from wtforms import PasswordField, StringField, DateField, IntegerField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 import sqlite3
-from flask_socketio import SocketIO, send, emit
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_socketio import SocketIO, send, emit
 from sqlalchemy import or_
 from datetime import datetime
@@ -20,9 +17,12 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'  
 
 #Models.py
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Hangman_reviews.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+app.config['WTF_CSRF_ENABLED'] = True  # Enable CSRF protection
+csrf = CSRFProtect(app)
+                  ## Test and Feedback models created by Josh Cooper
 
 class HangmanReviews(db.Model):
     reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
@@ -52,7 +52,7 @@ def create_tables():
     with app.app_context():
         db.create_all()
 create_tables()
-
+  ## Feedback routes also made by Josh Cooper
 #Routes.py
 @app.route('/CreateFeedback', methods=['GET', 'POST'])
 def CreateFeedback():
@@ -202,20 +202,28 @@ def newChallenge(word, hint, player):
 
 
 # Route for the signup page
+
+class SignupForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    password= PasswordField("Password",validators=[DataRequired()])
+    confirm_password= PasswordField("Confirm Password",validators=[DataRequired()])
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    form=SignupForm()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
         if password != confirm_password:
-            return render_template('signup.html', error_msg="Passwords do not match. Please try again.")
+            return render_template('signup.html', error_msg="Passwords do not match. Please try again.",form=form)
         
         existing_user = db.session.execute(db.select(User).where(User.username == username)).scalar()
         
         if existing_user:
-            return render_template('signup.html', error_msg="User already exists. Please choose a different username.")
+            return render_template('signup.html', error_msg="User already exists. Please choose a different username.",form=form)
         
         new_user = User(
             username = username,
@@ -225,16 +233,20 @@ def signup():
         db.session.commit()
 
         # Pass a success message to the template
-        return render_template('signup.html', success_msg="Account has been created successfully!")
+        return render_template('signup.html', success_msg="Account has been created successfully!",form=form)
 
-    return render_template('signup.html')
+    return render_template('signup.html',form=form)
 
-
+class LoginForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    password= PasswordField("Password",validators=[DataRequired()])
+    
 
 
 # Route for the login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    forms=LoginForm()
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -247,9 +259,9 @@ def login():
             return redirect(url_for('home'))
         else:
             # Pass the error message to the template
-            return render_template('login.html', msg="Invalid username or password. Please try again.")
+            return render_template('login.html', msg="Invalid username or password. Please try again.",form=forms)
 
-    return render_template('login.html')
+    return render_template('login.html',form=forms)
 
 
 # Route for the home page
@@ -309,9 +321,14 @@ def a_challenge(id):
     db.session.commit()
     return ''
 
+class TwoPlayerChallengeForm(FlaskForm):
+    player=StringField("Player:",validators=[DataRequired()])
+    word = StringField("Enter Word:", validators=[DataRequired()])
+    hint= StringField("Hint:",validators=[DataRequired()])
 
 @app.route('/two-player-challenge', methods=["POST", "GET"])
 def twoPlayerChallenge():
+    form=TwoPlayerChallengeForm()
     error = None
     if request.method == 'POST':
         word = request.form.get('word')
@@ -327,7 +344,7 @@ def twoPlayerChallenge():
             return redirect(url_for('home'))
         
     users = db.session.execute(db.select(User)).scalars()
-    return render_template('new-challenge.html', name=session['username'], users=users, all_c=get_all_challenges(), n_not=get_all_unread_notifications(), error=error)
+    return render_template('new-challenge.html', name=session['username'], users=users, all_c=get_all_challenges(), n_not=get_all_unread_notifications(), error=error,form=form)
 
 
 @app.route('/get-challenge/<id>')

@@ -1,0 +1,950 @@
+.signup-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  input[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  .icon {
+    position: absolute;
+    padding: 15px;
+    pointer-events: none;
+  }
+  .fa-user {
+    padding-top: 16px;
+    padding-left: 10px;
+  }
+  .fa-lock {
+    padding-top: 16px;
+    padding-left: 10px;
+  }
+  .fa-check-circle {
+    color: #4caf50;
+    padding-top: 16px;
+    padding-left: 10px;
+    visibility: hidden;
+  }
+  input[type="text"]:focus + .fa-user,
+  input[type="password"]:focus + .fa-lock {
+    color: #4caf50;
+  }
+  input[type="text"]:valid + .fa-user,
+  input[type="password"]:valid + .fa-lock {
+    color: #4caf50;
+  }
+  input[type="text"]:valid + .fa-check-circle,
+  input[type="password"]:valid + .fa-check-circle {
+    visibility: visible;
+  }
+  
+  .success-msg{
+    color: #07cc0d;
+  }
+  
+  .error-msg{
+    color: #de0707;
+  }
+  .msg-col{
+    margin-bottom: 8px;
+    text-align: center;
+    font-size: 14px;
+  }
+  /**----------sign up---------------**/
+  
+  @media only screen and (max-device-width : 480px) {
+    body {
+      margin: auto;
+    }
+  
+    .game-board-wrapper {
+      flex-direction: column;
+      margin-right: 0;
+    }
+  
+    #letterBoard {
+      width: 80%;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      justify-content: space-between;
+      order: 5;
+    }
+  
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+.login-container {
+    max-width: 400px;
+    margin: 150px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.icon {
+    position: absolute;
+    padding: 15px;
+    pointer-events: none;
+}
+.fa-user {
+    padding-top: 16px;
+    padding-left: 10px;
+}
+.fa-lock {
+    padding-top: 16px;
+    padding-left: 10px;
+}
+.msg{
+color: #de0707;
+margin-bottom: 8px;
+text-align: center;
+font-size: 14px;
+}
+
+
+body {
+  background-color: #ffffff; /*coral*/
+  margin: 0;
+}
+
+/**----------navbar----------**/
+img.logo {
+  width: 210px;
+  height: auto;
+  /**margin-right: 34px;*/
+}
+
+.navbar {
+  background-color: #fff9dd;
+}
+
+.nav1 {
+  position: relative;
+  /**margin-right: 34px;*/
+}
+
+.nav2 {
+  margin-left: 18px;
+}
+
+
+a.nav-link{
+  font-size: 14px;
+}
+
+.fa-regular.fa-bell{
+  font-size: 20px;
+}
+
+.notification-num{
+  color: #783C26;
+  text-decoration: none;
+}
+
+
+/**----------navbar------------**/
+
+/**-----------general section--------**/
+.container {
+  max-width: 1300px;
+  margin: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+  position: relative;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.small-container {
+  /**.popular-container, .featured-container, .testimonial-container, .partner-container*/
+  max-width: 1160px;
+  margin: auto;
+  padding-left: 0px;
+  /**22px**/
+  padding-right: 0px;
+}
+
+/**-----------general section--------**/
+
+/**-----------score section--------**/
+.score {
+  margin-top: 20px;
+}
+
+.score .col-4{
+  text-align: center;
+  cursor: pointer;
+}
+
+
+.score .col-4 img {
+  width: 170px;
+}
+
+
+
+.score .col-4 h3 {
+  font-weight: 600;
+  color: #3b3b3b;
+  font-size: 24px;
+}
+
+.score .col-4 {
+  flex-basis: 27%; /** the smaller the %, the narrower the div column*/
+  min-width: 250px; /** the larger the px, the narrower*/
+  font-size: 20px;
+}
+
+/**-----------score section--------**/
+
+/**-----------button section--------**/
+.play-button{
+  margin-top: 34px;
+}
+
+.play-button .col-6{
+  text-align: center;
+  cursor: pointer;
+}
+
+.play-button .col-6{
+    flex-basis: 30%;
+    min-width: 300px;
+  }
+
+
+/**-----------button section--------**/
+
+/**-----------hangman and result section--------**/
+
+.result {
+  margin-top: 22px; /**top rightleft bot**/
+  /**--100px auto--topbot rightleft---*/
+}
+
+.result .col-12{
+  text-align: center;
+}
+
+.result .col-12{
+  flex-basis: 90%; /** the smaller the %, the narrower the div column*/
+  min-width: 300px; /** the larger the px, the narrower*/
+}
+/**-----------hangman and result section--------**/
+
+/**-----------two-player section--------**/
+
+.two-player {
+  margin-top: 75px; /**top rightleft bot**/
+  /**--100px auto--topbot rightleft---*/
+}
+
+
+.two-player .col-12{
+  flex-basis: 90%; /** the smaller the %, the narrower the div column*/
+  min-width: 300px; /** the larger the px, the narrower*/
+}
+
+.challenge-container {
+  max-width: 400px;
+  margin: 0px auto 0; /**top rightleft bot**/
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+select{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.challenge-content-wrapper {
+display: flex;
+flex-direction: column;
+min-height: 85vh; /* Ensure the container takes at least the full viewport height */
+}
+.challenge-msg{
+color: #de0707;
+margin-bottom: 8px;
+text-align: center;
+font-size: 14px;
+}
+
+/**-----------two-player section--------**/
+.leaderboardUpdateMessage {
+  display: block; /* or inline-block */
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+/**-----------leaderboard section--------**/
+.leaderboard {
+  margin-top: 60px; /**top rightleft bot**/
+  /**--100px auto--topbot rightleft---*/
+}
+
+.leaderboard .col-12{
+  flex-basis: 90%; /** the smaller the %, the narrower the div column*/
+  min-width: 300px; /** the larger the px, the narrower*/
+}
+
+.leaderboard-container {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+th {
+  background-color: #f2f2f2;
+}
+tr:hover {
+  background-color: #f5f5f5;
+}
+.highlight {
+  background-color: #ffe4b5; /* Light Orange */
+}
+.leaderboard-content-wrapper {
+display: flex;
+flex-direction: column;
+min-height: 85vh; /* Ensure the container takes at least the full viewport height */
+}
+/**-----------leaderboard section--------**/
+
+
+/**-----------typing section--------**/
+
+.type-letters {
+  margin-top: 22px; /**top rightleft bot**/
+  /**--100px auto--topbot rightleft---*/
+}
+
+.type-letters .col-12{
+  text-align: center;
+}
+
+.type-letters .col-12{
+  flex-basis: 85%; /** the smaller the %, the narrower the div column*/
+  min-width: 300px; /** the larger the px, the narrower*/
+}
+/**-----------typing section--------**/
+
+/**-----------hint section--------**/
+
+.hint {
+  margin-top: 22px; /**top rightleft bot**/
+  /**--100px auto--topbot rightleft---*/
+}
+
+.hint .col-12{
+  text-align: center;
+}
+
+.hint .col-12{
+  flex-basis: 85%; /** the smaller the %, the narrower the div column*/
+  min-width: 300px; /** the larger the px, the narrower*/
+}
+/**-----------typing section--------**/
+
+
+
+/**-----------lose message section--------**/
+.loseMessage {
+  background-color: rgb(241, 110, 110);
+  color: rgb(50, 50, 50); /* Change text color to white for better visibility */
+  padding: 8px;
+  border-radius: 0px;
+}
+/**-----------lose message section--------**/
+
+header {
+  text-align: center;
+}
+#User_Data{
+    font-family: 'Love Ya Like A Sister', cursive;
+    color: #1358d7; /*off-white*/
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    font-size: 130px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-shadow: 5px 5px #a9a9a9; /*light gray*/
+  }
+  
+
+/**-----------navbar section--------**/
+.nav-item1, .difficulty-button, .two-player-button {
+  text-decoration: none;
+  font-size: 15px;
+  margin-right: 15px;
+  margin-left: 15px;
+  color: black;
+}
+
+.difficulty-button:hover, .two-player-button:hover {
+  text-decoration: underline;
+}
+
+a.clicked {
+  text-decoration: underline;
+  font-weight: 800;
+  color: rgb(236, 11, 11);
+
+}
+/**-----------navbar section--------**/
+
+/**
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    font-size: 25px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}**/
+
+/**-----------index section--------**/
+.game-board-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0px;
+  margin-top: 20px;
+}
+
+.button {
+  display: inline-block;
+  background: #0479b4;
+  color: #fff;
+  padding: 8px 30px; /**topbot rightleft**/
+  
+  border-radius: 30px;
+  border: none;
+  transition: background 0.5s;
+}
+
+.button2 {
+  display: inline-block;
+  background: #0479b4;
+  color: #fff;
+  padding: 6px 25px; /**topbot rightleft**/
+  
+  margin-top: 5px;
+  margin-right: 20px;
+  border-radius: 30px;
+  border: none;
+  transition: background 0.5s;
+}
+
+.button2:hover,
+.button:hover{
+  background: #57b7ff;
+  color: #2e2f2f;
+}
+
+.letter {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+#letterBoard {
+  background-color: turquoise;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.disabled {
+  background-color: #a9a9a9; /*light gray*/
+  color: gray;
+}
+
+#containerForHiddenLetterList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+/*  margin-bottom: 70px;*/
+}
+
+#hiddenLetterList {
+  text-align: center;
+  letter-spacing: 10px;
+  font-size: 70px;
+  font-family: 'Love Ya Like A Sister', cursive;
+  text-transform: uppercase;
+  margin: 0 auto;
+}
+
+#containerForHintButton{
+  margin: 0 auto;
+}
+
+#hintButton {
+  margin-left: 40px;
+}
+
+#containerForHint {
+  margin-bottom: 70px;
+  font-size: 26px;
+}
+
+.winOrLossMessage {
+  font-size: 70px;
+}
+
+button {
+  background-color: #FDF4FD; /*off-white*/
+}
+
+button:hover {
+  background-color: #a9a9a9; /*gray*/
+}
+
+.hangman-display {
+  margin-right: 0px;
+  height: 320px;
+  text-align: center;
+}
+.letterBoard{
+  margin-left: 20px;
+}
+/**-----------index section--------**/
+
+
+/**-----------footer section--------**/
+  
+.footer {
+  background: #000;
+color: #8a8a8a;
+font-size: 18px;
+position: relative;
+bottom: 100%;
+padding: 30px 0 10px;/**top rightleft bot**/
+margin-top: 10px;
+}
+
+.footer-link {
+  color: rgb(140, 140, 140);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-col6{
+  flex-basis: 30%;
+  min-width: 300px;
+}
+
+#name {
+  color: rgb(140, 140, 140);
+  text-decoration: none;
+  font-weight: 700;
+}
+/**-----------footer section--------**/
+
+.notification-hide{
+  display: none;
+}
+
+.notification-count{
+  position: relative;
+  height: 1rem;
+  width: 1rem;
+  bottom: 30px;
+  left: 14px;
+  border: 2px solid red;
+  background-color: red;
+  border-radius: 50%;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+
+.notifications-bar{
+  position: absolute;
+  right: 10%;
+  background-color: white;
+  padding: 0.7rem 1rem;
+  border: 2px solid red;
+  border-radius: 5px;
+  width: 25rem;
+}
+
+.notifications-bar hr{
+  margin: 0.3rem 0;
+}
+
+.notification-item{
+  display: flex;
+  align-items: center;
+}
+
+.show {display: block;}
+
+.username{
+  color: #0479b4;
+  font-weight: bold;
+}
+
+.btn-accept{
+  height: 3rem;
+}
+
+/**----------sign up and other forms---------------**/
+body.signup-body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.signup-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.login-container h2,
+.signup-container h2,
+.challenge-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type="submit"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+.icon {
+  position: absolute;
+  padding: 15px;
+  pointer-events: none;
+}
+.fa-user {
+  padding-top: 16px;
+  padding-left: 10px;
+}
+.fa-lock {
+  padding-top: 16px;
+  padding-left: 10px;
+}
+.fa-check-circle {
+  color: #4caf50;
+  padding-top: 16px;
+  padding-left: 10px;
+  visibility: hidden;
+}
+input[type="text"]:focus + .fa-user,
+input[type="password"]:focus + .fa-lock {
+  color: #4caf50;
+}
+input[type="text"]:valid + .fa-user,
+input[type="password"]:valid + .fa-lock {
+  color: #4caf50;
+}
+input[type="text"]:valid + .fa-check-circle,
+input[type="password"]:valid + .fa-check-circle {
+  visibility: visible;
+}
+
+.success-msg{
+  color: #07cc0d;
+}
+
+.error-msg{
+  color: #de0707;
+}
+.msg-col{
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+/**----------sign up---------------**/
+
+/**----------login---------------**/
+.login-container {
+  max-width: 400px;
+  margin: 130px auto 0;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.msg {
+  color: #de0707;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.link-container {
+  text-align: center;
+}
+
+a.link2 {
+  text-decoration: none;
+  color: #016285;
+  font-size: 18px;
+  padding: 3px 7px;
+  border: 2px solid #03ced3;
+  border-radius: 5px;
+  margin: 20px 6px 0px;
+  /**top rightleft bottom*/
+  display: inline-block;
+}
+
+a.link2:hover {
+  border: 2px solid #f54141;
+}
+
+
+
+@media only screen and (max-device-width : 480px) {
+  body {
+    margin: auto;
+  }
+
+  .game-board-wrapper {
+    flex-direction: column;
+    margin-right: 0;
+  }
+
+  #letterBoard {
+    width: 80%;
+  }
+
+  .button-container {
+    flex-direction: column;
+    justify-content: space-between;
+    order: 5;
+  }
+
+}
+
+#CreateFeedBackTitle{
+  background-color: #fff9dd;
+  color: black;
+  text-align: center;
+}
+
+.CharacterSelectionLogo{
+  position: absolute;
+  float: right;
+  right:15%;
+}
+.Feedbacktable th,td{
+ margin-left: auto;
+ margin-right:auto;
+
+}
+
+body{
+  background-color: whitesmoke;
+}
+
+
+#Feedbackusername{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; 
+  font-size: 18px;
+}
+
+#date_played {
+width: 100%;
+padding: 10px;
+margin-bottom: 12px;
+border: 2px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box; 
+font-size: 18px;
+}
+
+/* Textarea */
+#Overall_FeedBack  {
+width: 100%;
+padding: 8px;
+margin-bottom: 10px;
+border: 2px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box;
+font-size: 18px;
+overflow-y: auto;
+}
+
+img.logo {
+  width: 210px;
+  height: auto;
+  /**margin-right: 34px;*/
+}
+
+#gameRate {
+width: 100%;
+padding: 8px;
+margin-bottom: 10px;
+border: 2px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box;
+font-size: 18px;
+appearance: none; 
+background-size: 15px;
+}
+
+.SubHead{
+  font-family: "Arial Black", Arial, sans-serif;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.Feedbacktable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the table header */
+.Feedbacktable th {
+  background-color: rgb(131, 131, 131);
+  border: 1px solid #dddddd;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style the table data */
+.Feedbacktable td {
+  border: 1px solid #dddddd;
+  padding: 10px;
+}
+
+
+
+/* Hover effect for rows */
+.Feedbacktable tr:hover {
+  background-color: rgb(191, 191, 191);
+}
