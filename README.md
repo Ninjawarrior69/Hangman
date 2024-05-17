@@ -100,8 +100,9 @@ pip install flask-sqlalchemy
 9. Enter this command to install selenium:
     pip install selenium
 
-10. Run App.py or enter this command:
-python App.py or flask run 
+10. Enter this command to run the app:
+python App.py 
+
 
 11. Click on the host link, eg. http://127.0.0.1:5005
 

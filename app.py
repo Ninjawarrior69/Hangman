@@ -1,124 +1,29 @@
-import uuid
-
-from flask_wtf import CSRFProtect, FlaskForm
-from wtforms import PasswordField, StringField, DateField, IntegerField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired, NumberRange
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 import sqlite3
 from flask_socketio import SocketIO, send, emit
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_socketio import SocketIO, send, emit
 from sqlalchemy import or_
 from datetime import datetime
+import uuid
+from flask_wtf import FlaskForm
+from wtforms import PasswordField, StringField, DateField, IntegerField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired, NumberRange
 
-#init.py
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  
+app.secret_key = 'your_secret_key'
 
-#Models.py
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
+# Configure the Flask app
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # Disable modification tracking
+
+# Initialize SQLAlchemy and Flask-Migrate
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-app.config['WTF_CSRF_ENABLED'] = True  # Enable CSRF protection
-csrf = CSRFProtect(app)
-                  ## Test and Feedback models created by Josh Cooper
 
-class HangmanReviews(db.Model):
-    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
-    datePlayed = db.Column(db.Date, nullable=False)
-    Game_Rating = db.Column(db.Integer, nullable=False)
-    General_Comments = db.Column(db.Text)
-
-
-class TestHangmanReviews(db.Model):
-    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
-    datePlayed = db.Column(db.Date, nullable=False)
-    Game_Rating = db.Column(db.Integer, nullable=False)
-    General_Comments = db.Column(db.Text)
-    
-
-# Form.py
-class HangmanReviewForm(FlaskForm):
-    username = StringField("Username:", validators=[DataRequired()])
-    datePlayed = DateField("Last Played", validators=[DataRequired()])
-    Game_Rating = IntegerField("Game Rating (out of 10):", validators=[NumberRange(min=1, max=10)])
-    General_Comments = TextAreaField('General Comments')
-    submit = SubmitField('Submit your Response')
-
-def create_tables():
-    with app.app_context():
-        db.create_all()
-create_tables()
-  ## Feedback routes also made by Josh Cooper
-#Routes.py
-@app.route('/CreateFeedback', methods=['GET', 'POST'])
-def CreateFeedback():
-    form = HangmanReviewForm()
-    username = session['username']
-    if form.validate_on_submit():
-        # Extract the data from the form
-        DATA_username = session['username']
-        DATA_datePlayed = form.datePlayed.data
-        DATA_Game_Rating = form.Game_Rating.data
-        DATA_General_Comments = form.General_Comments.data
-        
-        try:
-            REVIEW_NEW = HangmanReviews(username=DATA_username, datePlayed=DATA_datePlayed, Game_Rating=DATA_Game_Rating, General_Comments=DATA_General_Comments)
-            db.session.add(REVIEW_NEW)
-            db.session.commit()
-            return redirect(url_for('Hangman_Reviews'))
-
-        except Exception as e:
-               db.session.rollback()  # Roll back to avoid issues
-               flash('Error cannot submit more than one review per session', 'error')
-    return render_template('CreateFeedback.html', form=form,name=session['username'])
-
-@app.route('/ExistingFeedback')
-def Hangman_Reviews():
-    Hangman_Reviews_Data = HangmanReviews.query.all()
-    return render_template('ListFeedback.html', Hangman_Reviews_Data=Hangman_Reviews_Data)
-
-
-@app.route('/charts')
-def charts():
-    # Query data for line chart (average game score over time)
-      line_chart_data = db.session.query(HangmanReviews.datePlayed, db.func.avg(HangmanReviews.Game_Rating)).group_by(HangmanReviews.datePlayed).all()
-
-    # Query data for bar chart (distribution of scores)
-      bar_chart_data = db.session.query(HangmanReviews.Game_Rating, db.func.count(HangmanReviews.reviewID)).group_by(HangmanReviews.Game_Rating).all()
-      date_labels=[]
-      avg_ratings=[]
-
-      ratings_COUNT=[]
-      categories_DATA=[]
-
-
-      for date,average_Ratings in line_chart_data:
-         avg_ratings.append(average_Ratings)
-         date_labels.append(str(date))
-
-      for categories,count in bar_chart_data:
-          categories_DATA.append(categories)
-          ratings_COUNT.append(count)
-      return render_template('FeedbackGraphics.html',ALL_DATES=date_labels,ALL_AVG=avg_ratings,COUNTS=ratings_COUNT,CATEGORIES=categories_DATA)
-
-
-def init_db():
-    with app.app_context():
-        db.create_all()
-
-init_db()
-
-
-
-
-
-  
+# Initialize Socket.IO
 socketio = SocketIO(app)
-
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -202,13 +107,10 @@ def newChallenge(word, hint, player):
 #     send(message, broadcast=True)
 
 
-# Route for the signup page
-
 class SignupForm(FlaskForm):
     username = StringField("Username:", validators=[DataRequired()])
     password= PasswordField("Password",validators=[DataRequired()])
     confirm_password= PasswordField("Confirm Password",validators=[DataRequired()])
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -217,7 +119,6 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-
         if password != confirm_password:
             return render_template('signup.html', error_msg="Passwords do not match. Please try again.",form=form)
         
@@ -232,17 +133,16 @@ def signup():
         )
         db.session.add(new_user)
         db.session.commit()
-
         # Pass a success message to the template
         return render_template('signup.html', success_msg="Account has been created successfully!",form=form)
-
     return render_template('signup.html',form=form)
+
+
 
 class LoginForm(FlaskForm):
     username = StringField("Username:", validators=[DataRequired()])
     password= PasswordField("Password",validators=[DataRequired()])
     
-
 
 # Route for the login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -251,9 +151,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
         user = db.session.execute(db.select(User).where(User.username == username, User.password==password)).scalar()
-
         if user:
             # Store the username in the session
             session['username'] = username
@@ -261,7 +159,6 @@ def login():
         else:
             # Pass the error message to the template
             return render_template('login.html', msg="Invalid username or password. Please try again.",form=forms)
-
     return render_template('login.html',form=forms)
 
 
@@ -335,7 +232,6 @@ def twoPlayerChallenge():
         word = request.form.get('word')
         hint = request.form.get('hint')
         player = request.form.get('player')
-
         user_exists = db.session.execute(db.select(User).where(User.username==player)).scalar()
         if not user_exists:
             error = "Username doesn't exist, please try again."
@@ -346,7 +242,6 @@ def twoPlayerChallenge():
         
     users = db.session.execute(db.select(User)).scalars()
     return render_template('new-challenge.html', name=session['username'], users=users, all_c=get_all_challenges(), n_not=get_all_unread_notifications(), error=error,form=form)
-
 
 @app.route('/get-challenge/<id>')
 def getChallenge(id):
@@ -401,6 +296,98 @@ def decrement_score():
         db.session.commit()
 
     return 'Score updated'
+
+
+
+
+class HangmanReviews(db.Model):
+    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    datePlayed = db.Column(db.Date, nullable=False)
+    Game_Rating = db.Column(db.Integer, nullable=False)
+    General_Comments = db.Column(db.Text)
+
+
+class TestHangmanReviews(db.Model):
+    reviewID = db.Column(db.String(36), nullable=False, unique=True,default=str(uuid.uuid4),primary_key=True)
+    username = db.Column(db.String(100), nullable=False)
+    datePlayed = db.Column(db.Date, nullable=False)
+    Game_Rating = db.Column(db.Integer, nullable=False)
+    General_Comments = db.Column(db.Text)
+    
+
+# Form.py
+class HangmanReviewForm(FlaskForm):
+    username = StringField("Username:", validators=[DataRequired()])
+    datePlayed = DateField("Last Played", validators=[DataRequired()])
+    Game_Rating = IntegerField("Game Rating (out of 10):", validators=[NumberRange(min=1, max=10)])
+    General_Comments = TextAreaField('General Comments')
+    submit = SubmitField('Submit your Response')
+
+def create_tables():
+    with app.app_context():
+        db.create_all()
+create_tables()
+
+@app.route('/CreateFeedback', methods=['GET', 'POST'])
+def CreateFeedback():
+    form = HangmanReviewForm()
+    username = session['username']
+    if form.validate_on_submit():
+        # Extract the data from the form
+        DATA_username = session['username']
+        DATA_datePlayed = form.datePlayed.data
+        DATA_Game_Rating = form.Game_Rating.data
+        DATA_General_Comments = form.General_Comments.data
+        
+        try:
+            REVIEW_NEW = HangmanReviews(username=DATA_username, datePlayed=DATA_datePlayed, Game_Rating=DATA_Game_Rating, General_Comments=DATA_General_Comments)
+            db.session.add(REVIEW_NEW)
+            db.session.commit()
+            return redirect(url_for('Hangman_Reviews'))
+
+        except Exception as e:
+               db.session.rollback()  # Roll back to avoid issues
+               flash('Error cannot submit more than one review per session', 'error')
+    return render_template('CreateFeedback.html', form=form,name=session['username'])
+@app.route('/ExistingFeedback')
+def Hangman_Reviews():
+    Hangman_Reviews_Data = HangmanReviews.query.all()
+    return render_template('ListFeedback.html', Hangman_Reviews_Data=Hangman_Reviews_Data)
+
+
+@app.route('/charts')
+def charts():
+    # Query data for line chart (average game score over time)
+      line_chart_data = db.session.query(HangmanReviews.datePlayed, db.func.avg(HangmanReviews.Game_Rating)).group_by(HangmanReviews.datePlayed).all()
+
+    # Query data for bar chart (distribution of scores)
+      bar_chart_data = db.session.query(HangmanReviews.Game_Rating, db.func.count(HangmanReviews.reviewID)).group_by(HangmanReviews.Game_Rating).all()
+      date_labels=[]
+      avg_ratings=[]
+
+      ratings_COUNT=[]
+      categories_DATA=[]
+
+
+      for date,average_Ratings in line_chart_data:
+         avg_ratings.append(average_Ratings)
+         date_labels.append(str(date))
+
+      for categories,count in bar_chart_data:
+          categories_DATA.append(categories)
+          ratings_COUNT.append(count)
+      return render_template('FeedbackGraphics.html',ALL_DATES=date_labels,ALL_AVG=avg_ratings,COUNTS=ratings_COUNT,CATEGORIES=categories_DATA)
+
+
+def init_db():
+    with app.app_context():
+        db.create_all()
+
+init_db()
+
+
+
 
 
 if __name__ == '__main__':
