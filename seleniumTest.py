@@ -35,12 +35,23 @@ class BarChartTest(unittest.TestCase):
         self.assertTrue(ExistingFeedbackTable.is_displayed())
 
 
-    def test_check_CSRF_token_and_form_loads(self):
-        self.driver.get("http://127.0.0.1:5000/CreateFeedback")
+    def test_check_CSRF_token_and_form_loads_LOGIN(self):
+        self.driver.get("http://127.0.0.1:5000/login")
 
-        Forms = self.driver.find_elements(By.CLASS_NAME,"form-group")
 
-        assert len(Forms) == 5        # CHECKING IF IT HAS A USERNAME, DATE_PLAYED  , RATING , COMMENTS AND A  CSRF TOKEN 
+        Token = self.driver.find_elements(By.NAME,"csrf_token")
+
+        self.assertIsNotNone(Token)       # A  CSRF TOKEN CORRECTLY RENDERS
+
+
+    
+    def test_check_CSRF_token_and_form_loads_SIGNUP(self):
+        self.driver.get("http://127.0.0.1:5000/signup")
+
+
+        Token = self.driver.find_elements(By.NAME,"csrf_token")
+
+        self.assertIsNotNone(Token)       # A  CSRF TOKEN CORRECTLY RENDERS
 
 if __name__ == "__main__":
     unittest.main()

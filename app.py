@@ -57,9 +57,10 @@ create_tables()
 @app.route('/CreateFeedback', methods=['GET', 'POST'])
 def CreateFeedback():
     form = HangmanReviewForm()
+    username = session['username']
     if form.validate_on_submit():
         # Extract the data from the form
-        DATA_username = form.username.data
+        DATA_username = session['username']
         DATA_datePlayed = form.datePlayed.data
         DATA_Game_Rating = form.Game_Rating.data
         DATA_General_Comments = form.General_Comments.data
@@ -73,7 +74,7 @@ def CreateFeedback():
         except Exception as e:
                db.session.rollback()  # Roll back to avoid issues
                flash('Error cannot submit more than one review per session', 'error')
-    return render_template('CreateFeedback.html', form=form)
+    return render_template('CreateFeedback.html', form=form,name=session['username'])
 
 @app.route('/ExistingFeedback')
 def Hangman_Reviews():
