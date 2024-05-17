@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- Linking to the external CSS file -->
-    <link rel="stylesheet" href="loginStyle.css">
-    <!-- Ensure this link is still HTTPS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-XXXXX" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles.css')}}">
+
+
+    <style>
+
+        
+    </style>
 </head>
-<body>
+
+<body class="signup-body">
     <div class="login-container">
         <h2>Login</h2>
         <form method="POST" action="/login">
-            <!-- Use server-side logic to populate the message -->
             <div class="msg">{{ msg }}</div>
-
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required>
-            <i class="fas fa-user icon" aria-hidden="true"></i><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password" required>
-            <i class="fas fa-lock icon" aria-hidden="true"></i><br><br>
+            {{ form.csrf_token }}
+            {{ form.username.label }}
+            {{ form.username( id="username") }}
+            <i class="fas fa-user icon"></i><br>
+            {{ form.password.label }}
+            {{ form.password( id="username") }}
+            <i class="fas fa-lock icon"></i><br><br>
+            
             <input type="submit" value="Login">
         </form>
         <hr>
-        <!-- Styled the "Sign Up" link -->
-        <p class="signup-link">Create An Account? <a href="signup.html">Sign Up</a></p>
+        <p style="text-align: center;">Create An Account?<a href="/signup">Sign Up</a></p>
     </div>
+
+
+    <div class="link-container">
+        <a href="/guest" class="link2">Back to Main Page</a>
+    </div>
+
+
 </body>
+
 </html>
